@@ -1,7 +1,9 @@
 ---
 title: "Xamarin.Forms on macOS With F#"
 date: 2017-09-21T20:42:47+01:00
+type: "post"
 draft: true
+categories: ["Xamarin", "F#"]
 ---
 
 Here is a post that I have been wanting to write for a long time, namely, how to
