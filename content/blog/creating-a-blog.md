@@ -101,6 +101,19 @@ description: ""
 
 ```
 
+# Publishing
+I published this blog on GitHub pages using the
+[excellent tutorial](https://gohugo.io/hosting-and-deployment/hosting-on-github/#host-github-user-or-organization-pages)
+from the Hugo's documentation.  Frankly speaking, it was much simpler that I
+anticipated!
+
+However, there is one thing I noticed, that the `<USERNAME>.github.io` repo
+should not be empty --- when I tried to perform the instructions with an empty
+repo, git got into some weird inconsisted state.  I had to add a commit to the
+`<USERNAME>.github.io` repo and I had to re-add the submodule.
+
+Also, I decided to put a `.nojekyll` file in the root of my
+`<USERNAME>.github.io` repo, to prevent Jekyll from running on my blog.
 
 # Conclusion (for now)
 So far I had a lot of fun with Hugo, as it requires a very little setup and most
