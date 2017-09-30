@@ -2,7 +2,7 @@
 title: "Creating a Blog"
 date: 2017-09-30T09:35:11+02:00
 type: "post"
-draft: true
+draft: false
 description: "After repeatedly failing over and over again to start my own blog, I have
 decided to try with hugo and see how it works out."
 categories: ["meta", "Hugo"]
