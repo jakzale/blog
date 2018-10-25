@@ -3,7 +3,7 @@ title: "Azure Directory, OAuth2, and Azure App Services"
 date: 2017-10-07T10:52:50+02:00
 type: "post"
 draft: true
-categories: []
+categories: ["Azure", "App Service"]
 description: ""
 ---
 
@@ -13,6 +13,7 @@ In theory using Azure Active Directory for Service-to-Service authentication
 should simplify the task, but in practice I struggled a bit, hence this blog
 entry.
 
+<!-- TODO: Read more about OAuth 2.0 -->
 # OAuth 2.0
 Azure Active Directory is based on the [OAuth 2.0](https://oauth.net/2/)
 authentication protocol.  My main rationale for using AAD was so I will not have
@@ -24,7 +25,7 @@ I will not delve into the full OAuth 2.0 specification, but I will mostly focus 
 ## Application
 When creating the OAuth 2.0 enabled application, you need to specify the
 following:
-- redicrect  URI, which is the URI the OAuth Authentication server will redirect
+- redicrect URI, which is the URI the OAuth Authentication server will redirect
   once the authentication was successful.
 - client id and secret, which are the credentials for the application.  It is
   extremely important that the secret is protected and not leaked outside.
@@ -128,4 +129,32 @@ have to improvise.
 
 
 
-# Managed Service Identity
+# Managed Service Identity (used in an App Service)
+Managed Service Identity (MSI) is a functionality provided by Microsoft Azure
+that simplifies handling the OAuth 2.0 flow.  It essentially provides a source
+of Bearer tokens for the developer to use in their application.
+
+Here I will focus mostly on using MSI from within Azure App Service, but I
+suspect that using it from within a VM is similar.
+
+**NOTE**:  Microsoft provides a .NET library for using MSI in applications
+called
+[Microsoft.Azure.Services.AppAuthentication](https://www.nuget.org/packages/Microsoft.Azure.Services.AppAuthentication),
+however as of writting this blog post the library is still in preview, so I will
+show how to handle authentication without using the library first.
+
+``` csharp
+private async Task<HttpResponseMessage> GetMSITokenAsync() {
+  var client = new HttpClient();
+
+  var resource = "{application id of target service}";
+  var msiEndpoint = Environment.GetEnvironmentVariable("MSI_SECRET");
+  var msiSecret = Environment.GetEnvironmentVariable("MSI_SECRET");
+
+  client.DefaultRequestHeaders.Add("Secret", msiSecret);
+
+  string requestUri = String.Format("{0}?resource={1}&api-version=2017-09-01", msiEndpoint, resource);
+
+  return await client.GetAsync(requestUri);
+}
+```
